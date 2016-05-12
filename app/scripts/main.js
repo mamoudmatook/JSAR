@@ -38,37 +38,63 @@ var renderer = new THREE.WebGLRenderer({
 	var mesh = new THREE.AxisHelper
 	scene.add( mesh );
     
-    addBar(0,6);
+    //addBar(0,6);
+    addCube(0, 0.4);
+    addSphere(0.8, 0.1);
     
-    function addBar(posX,height){
-		var sizeBar = 0.2;
-		var highestHeight = 8+2;
-		var counter = 0;
-		var geometry = new THREE.BoxGeometry( sizeBar, sizeBar, sizeBar );
-		var material = new THREE.MeshPhongMaterial( { color:0x1054B5,reflectivity:1} );
-		var mesh = new THREE.Mesh( geometry, material );
-		mesh.position.x = posX;
-		mesh.position.y = 0;
-		mesh.position.z = 0;
-		var myMatrix = new THREE.Matrix4().set(
+    function addCube(posX, size) {
+        var counter = 0;
+        var geometry = new THREE.BoxGeometry(size, size, size);
+        var material = new THREE.MeshPhongMaterial( { color: 0x00FF00, reflectivity:1} );
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.x = posX;
+        mesh.position.y = 0;
+        mesh.position.z = 0;
+        // var myMatrix = new THREE.Matrix4().set(
+		// 	1,0,0,0,
+		// 	0,1,0,0,
+		// 	0,0,1,0.2,
+		// 	0,0,0,1
+		// );
+		// mesh.geometry.applyMatrix( myMatrix );
+        scene.add(mesh);
+        onRenderFcts.push(function (now, delta) {
+            counter = counter + 0.1;
+            if (counter < 360) {
+                mesh.rotation.x = counter;
+            }
+            if (counter === 360) {
+                counter = 0;
+            }
+        });
+    }
+    
+    function addSphere(posX, size) {
+        var counter = 360;
+        var geometry = new THREE.SphereGeometry(size, 8, 8);
+        var material = new THREE.MeshPhongMaterial( { color: 0xFF0000, reflectivity:1} );
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.x = 0;
+        mesh.position.y = 0;
+        mesh.position.z = 0;
+        var myMatrix = new THREE.Matrix4().set(
 			1,0,0,0,
 			0,1,0,0,
-			0,0,1,sizeBar/2,
+			0,0,1,posX,
 			0,0,0,1
 		);
 		mesh.geometry.applyMatrix( myMatrix );
-		scene.add( mesh );
-		onRenderFcts.push(function(now, delta){
-			counter += 0.1 * delta/80;
-			if (counter<height) {
-				mesh.scale.z =counter;
-                //mesh.rotateX(counter);
-			}
-			if(counter>highestHeight){
-				counter = 0
-			}
-		});
-	}
+        scene.add(mesh);
+        onRenderFcts.push(function (now, delta) {
+            counter = counter - 0.1;
+            if (counter < 360) {
+                mesh.rotation.x = counter;
+            }
+            if (counter === 0) {
+                counter = 360;
+            }
+        });
+    }
     
     //render
     // handle window resize
