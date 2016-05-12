@@ -1,0 +1,8 @@
+{
+  "name": "ar",
+  "version": false,
+  "dependencies": {},
+  "ambientDependencies": {
+    "three": "registry:dt/three#0.0.0+20160501153841"
+  }
+}

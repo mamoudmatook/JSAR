@@ -1,0 +1,24 @@
+{
+  "name": "ar",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "modernizr": "~2.8.1"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js",
+        "dist/fonts/*"
+      ]
+    }
+  },
+  "devDependencies": {
+    "threex.webar": "*",
+    "three.js": "threejs#*",
+    "aruco-marker": "^1.0.0",
+    "js-aruco": "*"
+  }
+}
